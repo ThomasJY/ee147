@@ -24,8 +24,8 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
      ********************************************************************/
 
     // INSERT KERNEL CODE HERE
-	__shared__ float ds_M[TILE_SIZE][TILE_SIZE];
-	__shared__ float ds_N[TILE_SIZE][TILE_SIZE];
+	__shared__ float ds_A[TILE_SIZE][TILE_SIZE];
+	__shared__ float ds_B[TILE_SIZE][TILE_SIZE];
 
 	int bx = blockIdx.x;
 	int by = blockIdx.y;
@@ -38,30 +38,24 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 	float result = 0;
 
 	for(int i = 0; i < n/TILE_SIZE; i++){
-		ds_M[ty][tx] = M[row*]
+		ds_A[ty][tx] = A[row][i*TILE_SIZE + tx];
+		ds_B[ty][tx] = B[i*TILE_SIZE + ty][col];
+		__syncthreads();
+		
+		for(int j = 0; j < TILE_SIZE; j++){
+			result += ds_A[ty][j] * ds_B[j][tx];
+			__syncthreads();
+		}
+		C[row][col] = result;
 	}
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
+
+
 
 void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, const float *A, int lda, const float *B, int ldb, float beta, float *C, int ldc)
 {

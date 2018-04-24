@@ -91,8 +91,8 @@ void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, cons
     const unsigned int BLOCK_SIZE = TILE_SIZE;
 
     //INSERT CODE HERE
-	int x = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
-	int y = (m + BLOCK_SIZE - 1) / BLOCK_SIZE;
+	int x = (m + BLOCK_SIZE - 1) / BLOCK_SIZE;
+	int y = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	dim3 numBlks(x, y);
 	dim3 threadsPerBlk(BLOCK_SIZE, BLOCK_SIZE);
 

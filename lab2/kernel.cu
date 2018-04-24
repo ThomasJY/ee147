@@ -37,7 +37,7 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 	
 	float result = 0;
 
-	for(int i = 0; i < n/TILE_SIZE; i++){
+	for(int i = 0; i < k/TILE_SIZE; i++){
 		ds_A[ty][tx] = A[row*k + i*TILE_SIZE + tx];
 		ds_B[ty][tx] = B[(i*TILE_SIZE + ty)*n + col];
 		__syncthreads();

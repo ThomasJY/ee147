@@ -24,19 +24,22 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
      ********************************************************************/
 
     // INSERT KERNEL CODE HERE
+	__shared__ float ds_M[TILE_SIZE][TILE_SIZE];
+	__shared__ float ds_N[TILE_SIZE][TILE_SIZE];
 
+	int bx = blockIdx.x;
+	int by = blockIdx.y;
+	int tx = threadIdx.x;
+	int ty = threadIdx.y;
 
+	int row = by*blockDim.y + ty;
+	int col = bx*blockDim.x + tx;
+	
+	float result = 0;
 
-
-
-
-
-
-
-
-
-
-
+	for(int i = 0; i < n/TILE_SIZE; i++){
+		ds_M[ty][tx] = M[row*]
+	}
 
 
 

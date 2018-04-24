@@ -94,8 +94,8 @@ void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, cons
     //INSERT CODE HERE
 	int x = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	int y = (m + BLOCK_SIZE - 1) / BLOCK_SIZE;
-	dim3 dim_grid(x, y, 1);
-	dim3 dim_block(BLOCK_SIZE, BLOCK_SIZE, 1);
+	dim3 dim_grid(x, y);
+	dim3 dim_block(BLOCK_SIZE, BLOCK_SIZE);
 
     // Invoke CUDA kernel -----------------------------------------------------
 

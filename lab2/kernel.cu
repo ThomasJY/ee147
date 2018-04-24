@@ -90,15 +90,14 @@ void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, cons
     const unsigned int BLOCK_SIZE = TILE_SIZE;
 
     //INSERT CODE HERE
-
-
-
+	dim3 dim_grid, dim_block;
+	dim_block = BLOCK_SIZE;
+	dim_grid = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
 
     // Invoke CUDA kernel -----------------------------------------------------
 
     //INSERT CODE HERE
-
-
+	mysgemm<<<dim_grid, dim_block>>>(m, n, k, A, B, C);
 
 
 }

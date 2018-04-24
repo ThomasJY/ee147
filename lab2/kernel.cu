@@ -38,20 +38,20 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 	float result = 0;
 
 	for(int i = 0; i < (k + TILE_SIZE - 1)/TILE_SIZE; i++){
-		if(row < m && i*TILE_SIZE + tx < k){
-			ds_A[ty][tx] = A[row*k + i*TILE_SIZE + tx];}
-		else{
-			ds_A[ty][tx] = 0.0;}
+		if(row < m && i*TILE_SIZE + tx < k)
+			ds_A[ty][tx] = A[row*k + i*TILE_SIZE + tx];
+		else
+			ds_A[ty][tx] = 0.0;
 		
-		if(col < n && i*TILE_SIZE + ty < k){
-			ds_B[ty][tx] = B[(i*TILE_SIZE + ty)*n + col];}
-		else{
-			ds_B[ty][tx] = 0.0;}
+		if(col < n && i*TILE_SIZE + ty < k)
+			ds_B[ty][tx] = B[(i*TILE_SIZE + ty)*n + col];
+		else
+			ds_B[ty][tx] = 0.0;
 		__syncthreads();
 		
-		if(row < m && col < n){
+		if(row < m && col < n)
 			for(int j = 0; j < TILE_SIZE; j++)
-				result += ds_A[ty][j] * ds_B[j][tx];}
+				result += ds_A[ty][j] * ds_B[j][tx];
 		__syncthreads();
 	}
 	
@@ -94,13 +94,13 @@ void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, cons
     //INSERT CODE HERE
 	int x = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	int y = (m + BLOCK_SIZE - 1) / BLOCK_SIZE;
-	dim3 numBlks(x, y);
-	dim3 threadsPerBlk(BLOCK_SIZE, BLOCK_SIZE);
+	dim3 dim_grid(x, y);
+	dim3 dim_block(BLOCK_SIZE, BLOCK_SIZE);
 
     // Invoke CUDA kernel -----------------------------------------------------
 
     //INSERT CODE HERE
-	mysgemm<<<numBlks, threadsPerBlk>>>(m, n, k, A, B, C);
+	mysgemm<<<dim_grid, dim_block>>>(m, n, k, A, B, C);
 
 
 }

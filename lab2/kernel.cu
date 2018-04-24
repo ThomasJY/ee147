@@ -38,15 +38,15 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 	float result = 0;
 
 	for(int i = 0; i < n/TILE_SIZE; i++){
-		ds_A[ty][tx] = A[row][i*TILE_SIZE + tx];
-		ds_B[ty][tx] = B[i*TILE_SIZE + ty][col];
+		ds_A[ty][tx] = A[row*k + i*TILE_SIZE + tx];
+		ds_B[ty][tx] = B[(i*TILE_SIZE + ty)*n + col];
 		__syncthreads();
 		
 		for(int j = 0; j < TILE_SIZE; j++){
 			result += ds_A[ty][j] * ds_B[j][tx];
 			__syncthreads();
 		}
-		C[row][col] = result;
+		C[row*n + col] = result;
 	}
 
 

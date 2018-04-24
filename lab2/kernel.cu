@@ -48,9 +48,9 @@ __global__ void mysgemm(int m, int n, int k, const float *A, const float *B, flo
 			ds_B[ty][tx] = 0.0;
 		__syncthreads();
 		
-		//if(row < m && col < n)
-		for(int j = 0; j < TILE_SIZE; j++)
-			result += ds_A[ty][j] * ds_B[j][tx];
+		if(row < m && col < n)
+			for(int j = 0; j < TILE_SIZE; j++)
+				result += ds_A[ty][j] * ds_B[j][tx];
 		__syncthreads();
 	}
 	
@@ -93,8 +93,8 @@ void basicSgemm(char transa, char transb, int m, int n, int k, float alpha, cons
     //INSERT CODE HERE
 	int x = (n + BLOCK_SIZE - 1) / BLOCK_SIZE;
 	int y = (m + BLOCK_SIZE - 1) / BLOCK_SIZE;
-	dim3 numBlks(y, x);
-	dim3 threadsPerBlk(BLOCK_SIZE, BLOCK_SIZE);
+	dim3 numBlks(x, y, 1);
+	dim3 threadsPerBlk(BLOCK_SIZE, BLOCK_SIZE, 1);
 
     // Invoke CUDA kernel -----------------------------------------------------
 

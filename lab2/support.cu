@@ -23,7 +23,7 @@ void verify(float *A, float *B, float *C, unsigned int m, unsigned int k,
       for(unsigned int i = 0; i < k; ++i) {
         sum += A[row*k + i]*B[i*n + col];
       }
-      printf("\t%f/%f",sum,C[row*n + col]);
+      //printf("\t%f/%f",sum,C[row*n + col]);
       float relativeError = (sum - C[row*n + col])/sum;
       if (relativeError > relativeTolerance
         || relativeError < -relativeTolerance) {

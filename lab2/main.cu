@@ -129,9 +129,9 @@ int main (int argc, char *argv[])
     free(C_h);
 
     //INSERT CODE HERE
-	free(A_d);
-	free(B_d);
-	free(C_d);
+	cudaFree(A_d);
+	cudaFree(B_d);
+	cudaFree(C_d);
 
 
     return 0;

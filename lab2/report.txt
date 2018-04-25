@@ -1,0 +1,7 @@
+Answer the following question:
+
+1. In your kernel implementation, how many threads can be simultaneously executing? Assuma a GPU which has 30 streaming multiprocessors.
+
+2. Use nvcc -ptxas-options="-v" to reprot the resource usage of your implementation. Note that the compilation will fail but you will still get a report of teh relevant information. Experiment with the Nvidia visual profiler, which is part of the CUDA toolkit, and use ti to further understand the resource usage. In particular, report your branch divergence behavior and whether your memory accesses are coalesced.
+
+3. How many times is each element of the input matrices loaded during the execution of the kernel?  

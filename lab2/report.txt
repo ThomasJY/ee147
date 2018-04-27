@@ -1,7 +1,16 @@
 Answer the following question:
 
 1. In your kernel implementation, how many threads can be simultaneously executing? Assuma a GPU which has 30 streaming multiprocessors.
+32*30 = 960
+960 threads if needed can be simultaneously executing.
 
-2. Use nvcc -ptxas-options="-v" to reprot the resource usage of your implementation. Note that the compilation will fail but you will still get a report of teh relevant information. Experiment with the Nvidia visual profiler, which is part of the CUDA toolkit, and use ti to further understand the resource usage. In particular, report your branch divergence behavior and whether your memory accesses are coalesced.
+2. Use nvcc -ptxas-options="-v" to reprot the resource usage of your implementation. Note that the compilation will fail but you will still get a report of teh relevant information. Experiment with the Nvidia visual profiler, which is part of the CUDA toolkit, and use it to further understand the resource usage. In particular, report your branch divergence behavior and whether your memory accesses are coalesced.
+
+ptxas info    : 0 bytes gmem
+ptxas info    : Compiling entry function '_Z7mysgemmiiiPKfS0_Pf' for 'sm_30'
+ptxas info    : Function properties for _Z7mysgemmiiiPKfS0_Pf
+    0 bytes stack frame, 0 bytes spill stores, 0 bytes spill loads
+ptxas info    : Used 25 registers, 2048 bytes smem, 360 bytes cmem[0]
+
 
 3. How many times is each element of the input matrices loaded during the execution of the kernel?  

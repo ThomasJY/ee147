@@ -18,7 +18,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
         int i = blockIdx.x*blockDim.x + threadIdx.x;
         
         if (i < num_elements)
-                atomicAdd(&bins[input[i]/num_bins], 1);
+                atomicAdd(&bins[input[i]], 1);
         
         
 }

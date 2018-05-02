@@ -12,17 +12,16 @@
 // INSERT KERNEL(S) HERE
 
 
-
-
-
-
-
-
-
-
-
-
-
+__global__ void histo_kernel(unsigned int* input, uint8_t* bins, unsigned int num_elements,
+        unsigned int num_bins)
+{
+        int i = blockIdx.x*blockDim.x + threadIdx.x;
+        
+        if (i < num_elements)
+                atomicAdd(&bins[input[i]/num_bins], 1);
+        
+        
+}
 
 
 
@@ -40,24 +39,15 @@ void histogram(unsigned int* input, uint8_t* bins, unsigned int num_elements,
         unsigned int num_bins) {
 
     // INSERT CODE HERE
+        
+        // Initialize thread block and kernel grid dimensions ---------------------
+        const unsigned int BLOCK_SIZE = 128;
 
+	dim3 dim_grid = (num_elements + BLOCK_SIZE - 1)/BLOCK_SIZE;
+	dim3 dim_block = BLOCK_SIZE;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        // Invoke CUDA kernel -----------------------------------------------------
+	histo_kernel<<<dim_grid, dim_block>>>(input, bins, numelements, num_bins);
 
 
 }

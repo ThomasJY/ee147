@@ -12,7 +12,7 @@
 // INSERT KERNEL(S) HERE
 
 
-__global__ void histo_kernel(unsigned int* input, uint8_t* bins, unsigned int num_elements,
+__global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
         int i = blockIdx.x*blockDim.x + threadIdx.x;
@@ -45,9 +45,11 @@ void histogram(unsigned int* input, uint8_t* bins, unsigned int num_elements,
 
 	dim3 dim_grid = (num_elements + BLOCK_SIZE - 1)/BLOCK_SIZE;
 	dim3 dim_block = BLOCK_SIZE;
+	
+	unsigned int *histo = bins;
 
         // Invoke CUDA kernel -----------------------------------------------------
-	histo_kernel<<<dim_grid, dim_block>>>(input, bins, numelements, num_bins);
+	histo_kernel<<<dim_grid, dim_block>>>(input, histo, num_elements, num_bins);
 
 
 }

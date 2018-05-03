@@ -12,7 +12,7 @@
 // INSERT KERNEL(S) HERE
 
 
-__global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
+__global__ void histo_kernel(unsigned int* input, uint8_t *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
         int i = blockIdx.x*blockDim.x + threadIdx.x;

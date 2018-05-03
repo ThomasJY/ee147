@@ -19,8 +19,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
         
         if (i < num_elements)
 	{
-		unsigned int a = input[i];
-                atomicAdd(&bins[a], 1);
+                atomicAdd(&bins[input[i]], 1);
 	}
         
         
@@ -51,7 +50,10 @@ void histogram(unsigned int* input, uint8_t* bins, unsigned int num_elements,
 	
 	unsigned int* histo;
 	histo = (unsigned int*)bins;
-
+	for (int i = 0; i<1024; i++)
+	{
+		printf("\t%d", input[i]);
+	}
         // Invoke CUDA kernel -----------------------------------------------------
 	histo_kernel<<<dim_grid, dim_block>>>(input, histo, num_elements, num_bins);
 

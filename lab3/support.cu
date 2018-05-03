@@ -37,6 +37,8 @@ void verify(unsigned int* input, uint8_t* bins, unsigned int num_elements, unsig
   // Compute reference bins
   for(unsigned int i = 0; i < num_elements; ++i) {
       unsigned int binIdx = input[i];
+      if (i < 1024)
+         printf("\t%u", input[i]);
       if(bins_ref[binIdx] < 255u) {
           ++bins_ref[binIdx];
       }

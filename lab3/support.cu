@@ -37,9 +37,9 @@ void verify(unsigned int* input, unsigned int* bins, unsigned int num_elements, 
   // Compute reference bins
   for(unsigned int i = 0; i < num_elements; ++i) {
       unsigned int binIdx = input[i];
-      if(bins_ref[binIdx] < 255u) {
+      //if(bins_ref[binIdx] < 255u) {
           ++bins_ref[binIdx];
-      }
+      //}
   }
 
    int x = 0;
@@ -48,10 +48,10 @@ void verify(unsigned int* input, unsigned int* bins, unsigned int num_elements, 
   for(unsigned int binIdx = 0; binIdx < num_bins; ++binIdx) {
      x+=bins[binIdx];
      y+=bins_ref[binIdx];
-    //  if(bins[binIdx] != bins_ref[binIdx]) {
-    //    printf("TEST FAILED at bin %u, cpu = %u, gpu = %u\n\n", binIdx, bins_ref[binIdx], bins[binIdx]);
-    //    exit(0);
-    //  }
+     if(bins[binIdx] != bins_ref[binIdx]) {
+        printf("TEST FAILED at bin %u, cpu = %u, gpu = %u\n\n", binIdx, bins_ref[binIdx], bins[binIdx]);
+        //exit(0);
+      }
   }
    printf("%d,%d\n", x,y);
   printf("TEST PASSED\n\n");

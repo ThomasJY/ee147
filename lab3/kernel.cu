@@ -19,7 +19,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	
 	int stride = blockDim.x * gridDim.x;
         
-        while(i < numelements){
+        while(i < num_elements){
                 atomicAdd(&bins[input[i]], 1);
 		i += stride;
 	}

@@ -16,10 +16,12 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
         unsigned int num_bins)
 {
         int i = blockIdx.x*blockDim.x + threadIdx.x;
+	
+	int stride = blockDim.x * gridDim.x;
         
-        if (i < num_elements)
-	{
+        while(i < numelements){
                 atomicAdd(&bins[input[i]], 1);
+		i += stride;
 	}
         
         

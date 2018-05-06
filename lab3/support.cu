@@ -42,15 +42,18 @@ void verify(unsigned int* input, unsigned int* bins, unsigned int num_elements, 
       }
   }
 
+   int x = 0;
+   int y = 0;
   // Compare to reference bins
   for(unsigned int binIdx = 0; binIdx < num_bins; ++binIdx) {
-     if (binIdx < 300)
-     printf("bin %u, cpu = %u, gpu = %u\n", binIdx, bins_ref[binIdx], bins[binIdx]);
+     x+=bins[binIdx];
+     y+=bins_ref[binIdx];
     //  if(bins[binIdx] != bins_ref[binIdx]) {
     //    printf("TEST FAILED at bin %u, cpu = %u, gpu = %u\n\n", binIdx, bins_ref[binIdx], bins[binIdx]);
     //    exit(0);
     //  }
   }
+   printf("%d,%d\n", x,y);
   printf("TEST PASSED\n\n");
 
   free(bins_ref);

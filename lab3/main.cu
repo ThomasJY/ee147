@@ -46,7 +46,7 @@ int main(int argc, char* argv[])
         exit(0);
     }
     initVector(&in_h, num_elements, num_bins);
-    bins_h = (uint8_t*) malloc(num_bins*sizeof(uint8_t));
+    bins_h = (unsigned int*) malloc(num_bins*sizeof(unsigned int));
 
     stopTime(&timer); printf("%f s\n", elapsedTime(timer));
     printf("    Input size = %u\n    Number of bins = %u\n", num_elements,

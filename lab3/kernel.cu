@@ -12,14 +12,14 @@
 // INSERT KERNEL(S) HERE
 
 
-__global__ void histo_kernel(unsigned int* input, uint8_t *bins, unsigned int num_elements,
+__global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
         int i = blockIdx.x*blockDim.x + threadIdx.x;
         
         if (i < num_elements)
 	{
-                atomicAdd((unsigned int*)&bins[input[i]], 1);
+                atomicAdd(&bins[input[i]], 1);
 	}
         
         
@@ -37,7 +37,7 @@ __global__ void histo_kernel(unsigned int* input, uint8_t *bins, unsigned int nu
 Setup and invoke your kernel(s) in this function. You may also allocate more
 GPU memory if you need to
 *******************************************************************************/
-void histogram(unsigned int* input, uint8_t* bins, unsigned int num_elements,
+void histogram(unsigned int* input, unsigned int* bins, unsigned int num_elements,
         unsigned int num_bins) {
 
     // INSERT CODE HERE

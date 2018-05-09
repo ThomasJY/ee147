@@ -18,20 +18,27 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	__shared__ unsigned int histo_private[4096];
 	
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
-	if(i < 4096)
+	int stride = blockDim.x;
+	while(i < num_bins){
 		histo_private[i] = 0;
+		i += stride;
+	}
 	__syncthreads();
 	
-	int stride = blockDim.x*gridDim.x;
+	i = blockIdx.x*blockDim.x + threadIdx.x;
+	stride = blockDim.x*gridDim.x;
         while(i < num_elements){
                 atomicAdd(&histo_private[input[i]], 1);
 		i += stride;
 	}
 	__syncthreads();
 	
-	int j = blockIdx.x*blockDim.x + threadIdx.x;
-	if(j < 4096)
+	i = blockIdx.x*blockDim.x + threadIdx.x;
+	stride = blockDim.x;
+	while(i < num_bins){
 		atomicAdd(&bins[j], histo_private[j]);
+		i += stride;
+	}
         
 }
 
@@ -51,16 +58,14 @@ void histogram(unsigned int* input, unsigned int* bins, unsigned int num_element
         unsigned int num_bins) {
 
     // INSERT CODE HERE
-        
         // Initialize thread block and kernel grid dimensions ---------------------
-        const unsigned int BLOCK_SIZE = 128;
+        const unsigned int BLOCK_SIZE = 512;
 
-	dim3 dim_grid = 1024;
+	dim3 dim_grid = 32;
 	dim3 dim_block = BLOCK_SIZE;
 	
         // Invoke CUDA kernel -----------------------------------------------------
 	histo_kernel<<<dim_grid, dim_block>>>(input, bins, num_elements, num_bins);
-
 
 }
 

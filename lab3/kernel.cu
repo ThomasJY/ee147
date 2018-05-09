@@ -23,7 +23,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	__syncthreads();
 	
 	//int stride = blockDim.x * gridDim.x;
-        while(i < num_elements){
+        if(i < num_elements){
                 atomicAdd(&histo_private[input[i]], 1);
 		//i += stride;
 	}

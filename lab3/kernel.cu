@@ -15,21 +15,21 @@
 __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
-	__shared__ unsigned int histo_private[4096];
+	__shared__ unsigned int histo_private[num_bins];
 	
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
 	histo_private[i] = 0;
 	__syncthreads();
 	
-	int stride = blockDim.x * gridDim.x;
+	int stride = 4096;
         while(i < num_elements){
                 atomicAdd(&histo_private[input[i]], 1);
 		i += stride;
 	}
 	__syncthreads();
 	
-	i = blockIdx.x*blockDim.x + threadIdx.x;
-	atomicAdd(&bins[i], histo_private[i]);
+	int j = blockIdx.x*blockDim.x + threadIdx.x;
+	atomicAdd(&bins[j], histo_private[j]);
         
 }
 

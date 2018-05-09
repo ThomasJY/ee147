@@ -36,7 +36,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	i = blockIdx.x*blockDim.x + threadIdx.x;
 	stride = blockDim.x;
 	while(i < num_bins){
-		atomicAdd(&bins[j], histo_private[j]);
+		atomicAdd(&bins[i], histo_private[i]);
 		i += stride;
 	}
         

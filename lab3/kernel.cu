@@ -15,7 +15,7 @@
 __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
-	__shared__ unsigned int histo_private[num_bins];
+	__shared__ unsigned int histo_private[4096];
 	
 	int i = blockIdx.x*blockDim.x + threadIdx.x;
 	histo_private[i] = 0;

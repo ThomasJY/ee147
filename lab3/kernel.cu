@@ -17,7 +17,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 {
 	__shared__ unsigned int histo_private[4096];
 	
-	int i = blockIdx.x*blockDim.x + threadIdx.x;
+	int i = threadIdx.x;
 	int stride = blockDim.x;
 	while(i < num_bins){
 		histo_private[i] = 0;
@@ -33,7 +33,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	}
 	__syncthreads();
 	
-	i = blockIdx.x*blockDim.x + threadIdx.x;
+	i = threadIdx.x;
 	stride = blockDim.x;
 	while(i < num_bins){
 		atomicAdd(&bins[i], histo_private[i]);

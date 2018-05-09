@@ -18,7 +18,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	__shared__ unsigned int histo_private[7];
 	
 	if(threadIdx.x < 4096)
-		histo_private[threadidx.x] = 0;
+		histo_private[threadIdx.x] = 0;
 	__syncthreads();
 	
         int i = blockIdx.x*blockDim.x + threadIdx.x;

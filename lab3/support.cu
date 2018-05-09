@@ -44,7 +44,7 @@ void verify(unsigned int* input, unsigned int* bins, unsigned int num_elements, 
 
   // Compare to reference bins
   for(unsigned int binIdx = 0; binIdx < num_bins; ++binIdx) {
-     if(binIdx < 100) {
+     if(binIdx < 100 || binIdx > 3996) {
         printf("bin %u, cpu = %u, gpu = %u\n", binIdx, bins_ref[binIdx], bins[binIdx]);
       }
 //     if(bins[binIdx] != bins_ref[binIdx]) {

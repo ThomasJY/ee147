@@ -22,10 +22,10 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 		histo_private[i] = 0;
 	__syncthreads();
 	
-	int stride = blockDim.x * gridDim.x;
+	//int stride = blockDim.x * gridDim.x;
         while(i < num_elements){
                 atomicAdd(&histo_private[input[i]], 1);
-		i += stride;
+		//i += stride;
 	}
 	__syncthreads();
 	

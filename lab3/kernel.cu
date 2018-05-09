@@ -30,7 +30,7 @@ __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned i
 	
 	int j = threadIdx.x;
 	while(j < 4096){
-		atomicAdd(&bins[j, histo_private[j]);
+		atomicAdd(&bins[j], histo_private[j]);
 		j += 128;
 	}
         

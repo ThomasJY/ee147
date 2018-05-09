@@ -15,7 +15,7 @@
 __global__ void histo_kernel(unsigned int* input, unsigned int *bins, unsigned int num_elements,
         unsigned int num_bins)
 {
-	__shared__ unsigned int histo_private[4096];
+	extern __shared__ unsigned int histo_private[];
 	
 	int i = threadIdx.x;
 	int stride = blockDim.x;
@@ -65,7 +65,8 @@ void histogram(unsigned int* input, unsigned int* bins, unsigned int num_element
 	dim3 dim_block = BLOCK_SIZE;
 	
         // Invoke CUDA kernel -----------------------------------------------------
-	histo_kernel<<<dim_grid, dim_block>>>(input, bins, num_elements, num_bins);
+	size_t SIZEOF_SHARED_MEMORY_IN_BYTES = num_bins*sizeof(unsigned int);
+	histo_kernel<<<dim_grid, dim_block, SIZEOF_SHARED_MEMORY_IN_BYTES>>>(input, bins, num_elements, num_bins);
 
 }
 

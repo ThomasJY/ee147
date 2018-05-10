@@ -59,9 +59,9 @@ void histogram(unsigned int* input, unsigned int* bins, unsigned int num_element
 
     // INSERT CODE HERE
         // Initialize thread block and kernel grid dimensions ---------------------
-        const unsigned int BLOCK_SIZE = 1024;
+        const unsigned int BLOCK_SIZE = 128;
 
-	dim3 dim_grid = 32;
+	dim3 dim_grid = 8;
 	dim3 dim_block = BLOCK_SIZE;
 	
         // Invoke CUDA kernel -----------------------------------------------------
